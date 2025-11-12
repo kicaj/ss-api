@@ -11,6 +11,10 @@ class ProductResource extends JsonResource
     {
         return [
             'name' => $this->resource->name,
+            'price' => $this->resource->price,
+            'manufacturer' => $this->whenLoaded('manufacturer', function () {
+                return new ManufacturerResource($this->resource->manufacturer);
+            }),
         ];
     }
 }
