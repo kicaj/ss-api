@@ -1,0 +1,23 @@
+name: "ss-task"
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+    volumes:
+      - ".:/var/www/html"
+    ports:
+      - "7777:80"
+    links:
+      - db
+  db:
+    image: mysql:8
+    ports:
+      - "6666:3306"
+    command:
+      mysqld
+      --character-set-server=UTF8MB4
+      --collation-server=utf8mb4_unicode_ci
+      --init-connect='SET NAMES UTF8MB4;'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ss-task-db
