@@ -2,7 +2,7 @@
     "name": "ss-task/ss-task",
     "type": "project",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "laravel/framework": "^12.0"
     },
     "require-dev": {

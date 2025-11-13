@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductCollection;
-use App\Models\Product;
 use App\Repositories\ProductRepository;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -13,11 +13,19 @@ class ProductController extends Controller
     )
     {}
 
-    public function index()
+    public function index(Request $request)
     {
         $products = $this->productRepository
-            ->getPaginate();
+            ->getAll();
 
-        return new ProductCollection($products);
+        if ($request->filled('category')) {
+            $products = $products
+                ->filterByCategory($request->get('category'));
+        }
+
+        return new ProductCollection(
+            $products
+                ->paginate()
+        );
     }
 }
