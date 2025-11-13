@@ -7,8 +7,9 @@ services:
       - ".:/var/www/html"
     ports:
       - "7777:80"
-    links:
+    depends_on:
       - db
+      - typesense
   db:
     image: mysql:8
     ports:
@@ -21,3 +22,14 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=ss-task-db
+  typesense:
+    image: typesense/typesense:29.0
+    restart: on-failure
+    ports:
+      - "5555:8108"
+    environment:
+      TYPESENSE_API_KEY: ${TYPESENSE_API_KEY}
+    volumes:
+      - "typesense_data:/data"
+volumes:
+  typesense_data:
