@@ -2,9 +2,9 @@
 
 namespace App\Interfaces;
 
-use App\Models\Product;
+use App\Builders\ProductBuilder;
 
 interface ProductInterface
 {
-    public function getAll(): Product;
+    public function getAll(): ProductBuilder;
 }

@@ -13,7 +13,7 @@ class ProductController extends Controller
     )
     {}
 
-    public function index(Request $request)
+    public function index(Request $request): ProductCollection
     {
         $products = $this->productRepository
             ->getAll();
@@ -21,6 +21,21 @@ class ProductController extends Controller
         if ($request->filled('category')) {
             $products = $products
                 ->filterByCategory($request->get('category'));
+        }
+
+        if ($request->filled('manufacturer')) {
+            $products = $products
+                ->filterByManufacturer($request->get('manufacturer'));
+        }
+
+        if ($request->filled('priceFrom')) {
+            $products = $products
+                ->filterByPriceFrom($request->get('priceFrom'));
+        }
+
+        if ($request->filled('priceTo')) {
+            $products = $products
+                ->filterByPriceTo($request->get('priceTo'));
         }
 
         return new ProductCollection(
